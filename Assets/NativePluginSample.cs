@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 
 public unsafe class NativePluginSample : MonoBehaviour
@@ -8,7 +9,7 @@ public unsafe class NativePluginSample : MonoBehaviour
     private static extern int Test(int a, int b);
 
     [DllImport("NativeDLL")]
-    private static extern void TestString(string msg);
+    private static extern string TestString(StringBuilder msg, int length);
 
     [DllImport("NativeDLL")]
     private static extern void TestByteData(char* array, int length);
@@ -31,8 +32,13 @@ public unsafe class NativePluginSample : MonoBehaviour
 
         Debug.Log($"{a} + {b} = {c}");
 
-        // string ‚ğ“n‚·Bc++ ‘¤‚Å string ‚Ì‰ÁH‚Íè‘±‚«‚ª–Ê“|‚È‚Ì‚ÅŠ„ˆ¤
-        TestString("string argument");
+        // StringBuilder ‚ğ“n‚·Bc++ ‘¤‚Å‘‚«Š·‚¦‚ÄŒ³‚É–ß‚·
+        StringBuilder s = new StringBuilder();
+        s.Append("string argument");
+
+        TestString(s, s.Length);
+
+        Debug.Log($"{s}");
 
         // byte[] Œ^‚Ìƒf[ƒ^‚ğ“n‚·Bc++ ‘¤‚Å‘‚«Š·‚¦‚ÄŒ³‚É–ß‚·
         byte[]    bytes   = { 0, 1, 2, 3, 4,};

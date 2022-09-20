@@ -14,8 +14,14 @@ extern "C"
         return a + b;
     }
 
-    __declspec(dllexport) void __stdcall TestString(char* msg)
+    __declspec(dllexport) void __stdcall TestString(char* msg, int length)
     {
+        if (length >= 1) msg[0] = 'i';
+        if (length >= 2) msg[1] = 'n';
+        if (length >= 3) msg[2] = 't';
+        if (length >= 4) msg[3] = 'i';
+        if (length >= 5) msg[4] = 'n';
+        if (length >= 6) msg[5] = 't';
     }
 
     __declspec(dllexport) void __stdcall TestByteData(char* array, int length)
